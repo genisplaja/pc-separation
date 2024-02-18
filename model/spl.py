@@ -8,7 +8,7 @@ from model.unet import UNet
 class Spleeter(nn.Module):
     def __init__(self,
                  device: torch.device = torch.device('cuda'),
-                 in_channels: int = 2,
+                 in_channels: int = 1,
                  stft_window_size: int = 4096,
                  encoder_act: str = 'relu',
                  decoder_act: str = 'elu',
@@ -16,7 +16,7 @@ class Spleeter(nn.Module):
                  decoder_dropout: bool = True,
                  kernel_size: int = 5,
                  stride: int = 2,
-                 separation_exponent: int = 2,
+                 separation_exponent: int = 2,  # presumably not used
                  targets: List = None,
                  max_freq_bins: int = 1024,
                  max_time_frames: int = 512):
@@ -24,7 +24,8 @@ class Spleeter(nn.Module):
         super(Spleeter, self).__init__()
 
         if targets is None:
-            targets = ['piano', 'orch']
+            targets = ['vocals']
+            ### targets = ['vocals', 'rest']
 
         self._device = device
         self._separation_exponent = separation_exponent
